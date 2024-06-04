@@ -1,6 +1,7 @@
 // Réaliser le CRUD complet pour les étudiants.
+// i have linked services with 'npm link services'
 
-import { get, add, update, remove } from "../../services/operationEtuds";
+import { getAll, add, update, remove } from "../services/operationEtuds";
 import React, { Component } from 'react';
 
 export class ListEtuds extends Component {
@@ -12,7 +13,6 @@ export class ListEtuds extends Component {
             Nom: "",
             Prénom: "",
             DatenET: "",
-            id: "",
         };
     }
 
@@ -21,94 +21,145 @@ export class ListEtuds extends Component {
     }
 
     getEtudiants = () => {
-        get((res) => {
+        getAll((res) => {
             this.setState({
                 Etuds: res.data,
             });
         });
     };
 
-    handleAdd = () => {
-        const etud = {
-            NumEtudiant: this.state.NumEtudiant,
-            Nom: this.state.Nom,
-            Prénom: this.state.Prénom,
-            DatenET: this.state.DatenET,
-        };
-        add(etud, (res) => {
-            this.getEtudiants();
-        });
+    handleChange = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
     };
 
-    handleUpdate = () => {
-        const etud = {
-            NumEtudiant: this.state.NumEtudiant,
-            Nom: this.state.Nom,
-            Prénom: this.state.Prénom,
-            DatenET: this.state.DatenET,
-        };
-        update(this.state.id, etud, (res) => {
-            this.getEtudiants();
-        });
+    handleSubmit = (event) => {
+        event.preventDefault();
+        add(
+            {
+                NumEtudiant: this.state.NumEtudiant,
+                Nom: this.state.Nom,
+                Prénom: this.state.Prénom,
+                DatenET: this.state.DatenET,
+            },
+            (res) => {
+                if (res.status === 200) {
+                    this.getEtudiants();
+                }
+            }
+        );
+    };
+
+    handleUpdate = (id) => {
+        update(
+            id,
+            {
+                NumEtudiant: this.state.NumEtudiant,
+                Nom: this.state.Nom,
+                Prénom: this.state.Prénom,
+                DatenET: this.state.DatenET,
+            },
+            (res) => {
+                if (res.status === 200) {
+                    this.getEtudiants();
+                }
+            }
+        );
     };
 
     handleDelete = (id) => {
         remove(id, (res) => {
-            this.getEtudiants();
+            if (res.status === 200) {
+                this.getEtudiants();
+            }
         });
     };
 
     render() {
         return (
-            <div>
-                <h1>Étudiants</h1>
-                <table>
+            <div className="container mx-auto">
+                <h1 className="text-2xl font-bold mb-4">Liste des étudiants</h1>
+                <form onSubmit={this.handleSubmit} className="mb-4">
+                    <label className="block mb-2">
+                        Numéro d'étudiant:
+                        <input
+                            type="text"
+                            name="NumEtudiant"
+                            value={this.state.NumEtudiant}
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded-md p-2"
+                        />
+                    </label>
+                    <label className="block mb-2">
+                        Nom:
+                        <input
+                            type="text"
+                            name="Nom"
+                            value={this.state.Nom}
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded-md p-2"
+                        />
+                    </label>
+                    <label className="block mb-2">
+                        Prénom:
+                        <input
+                            type="text"
+                            name="Prénom"
+                            value={this.state.Prénom}
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded-md p-2"
+                        />
+                    </label>
+                    <label className="block mb-2">
+                        Date de naissance:
+                        <input
+                            type="text"
+                            name="DatenET"
+                            value={this.state.DatenET}
+                            onChange={this.handleChange}
+                            className="border border-gray-300 rounded-md p-2"
+                        />
+                    </label>
+                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">Ajouter</button>
+                </form>
+                <table className="w-full">
                     <thead>
                         <tr>
-                            <th>Numéro</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Date de naissance</th>
-                            <th>Action</th>
+                            <th className="border-b-2 border-gray-300 py-2">Numéro d'étudiant</th>
+                            <th className="border-b-2 border-gray-300 py-2">Nom</th>
+                            <th className="border-b-2 border-gray-300 py-2">Prénom</th>
+                            <th className="border-b-2 border-gray-300 py-2">Date de naissance</th>
+                            <th className="border-b-2 border-gray-300 py-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.Etuds.map((etud) => (
                             <tr key={etud._id}>
-                                <td>{etud.NumEtudiant}</td>
-                                <td>{etud.Nom}</td>
-                                <td>{etud.Prénom}</td>
-                                <td>{etud.DatenET}</td>
-                                <td>
-                                    <button onClick={() => this.handleDelete(etud._id)}>Supprimer</button>
-                                    <button onClick={() => this.handleUpdate(etud._id)}>Modifier</button>
+                                <td className="border-b border-gray-300 py-2">{etud.NumEtudiant}</td>
+                                <td className="border-b border-gray-300 py-2">{etud.Nom}</td>
+                                <td className="border-b border-gray-300 py-2">{etud.Prénom}</td>
+                                <td className="border-b border-gray-300 py-2">{etud.DatenET}</td>
+                                <td className="border-b border-gray-300 py-2">
+                                    <button
+                                        onClick={() => {
+                                            this.handleUpdate(etud._id);
+                                        }}
+                                        className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                                    >
+                                        Modifier
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            this.handleDelete(etud._id);
+                                        }}
+                                        className="bg-red-500 text-white px-2 py-1 rounded-md"
+                                    >
+                                        Supprimer
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <h2>Ajouter un étudiant</h2>
-                <input type="text" placeholder="Numéro" onChange={(e) => this.setState({ NumEtudiant: e.target.value })}
-                />
-                <input type="text" placeholder="Nom" onChange={(e) => this.setState({ Nom: e.target.value })}
-                />
-                <input type="text" placeholder="Prénom" onChange={(e) => this.setState({ Prénom: e.target.value })}
-                />
-                <input type="text" placeholder="Date de naissance" onChange={(e) => this.setState({ DatenET: e.target.value })}
-                />
-                <button onClick={this.handleAdd}>Ajouter</button>
-                <h2>Modifier un étudiant</h2>
-                <input type="text" placeholder="ID" onChange={(e) => this.setState({ id: e.target.value })}
-                />
-                <input type="text" placeholder="Numéro" onChange={(e) => this.setState({ NumEtudiant: e.target.value })}
-                />
-                <input type="text" placeholder="Nom" onChange={(e) => this.setState({ Nom: e.target.value })}
-                />
-                <input type="text" placeholder="Prénom" onChange={(e) => this.setState({ Prénom: e.target.value })}
-                />
-                <input type="text" placeholder="Date de naissance" onChange={(e) => this.setState({ DatenET: e.target.value })}
-                />
-                <button onClick={this.handleUpdate}>Modifier</button>
             </div>
         );
     }

@@ -1,3 +1,7 @@
+// axios est importé sur le node_modules présent dans '/server'
+
+import axios from "axios"
+
 export const getAll = (callback) => {
   axios.get("http://localhost:4000/etudiants").then((res) => callback(res));
 };
@@ -18,7 +22,7 @@ export const update = (id, etud, callback) => {
     .catch((err) => callback(err));
 }
 
-getEtudiants = () => {
+export const getEtudiants = () => {
   getAll((res) => {
     this.setState({
       Etuds: res.data,
