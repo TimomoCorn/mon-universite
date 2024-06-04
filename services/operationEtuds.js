@@ -9,6 +9,3 @@ getEtudiants = () => {
     });
   });
 };
-componentDidMount = () => {
-  this.getEtudiants();
-};
