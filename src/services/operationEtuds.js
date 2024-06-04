@@ -1,5 +1,3 @@
-// axios est importé sur le node_modules présent dans '/server'
-
 import axios from "axios"
 
 export const getAll = (callback) => {
