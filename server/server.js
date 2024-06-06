@@ -26,15 +26,24 @@ let EtudSchema = new Schema(
   {
     NumEtudiant: String,
     Nom: String,
-    Prénom: String,
     DatenET: String,
+    Prenom: String,
   },
   { versionKey: false }
 );
 
 let Etud = mongoose.model("Etudiants", EtudSchema, "Etudiants");
 
-app.post("/add", async (req, res) => {
+app.get("/Etudiants", async (req, res) => {
+  try {
+    let results = await Etud.find({});
+    res.send(results);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post("/Etudiants/add", async (req, res) => {
   try {
     const etud = new Etud(req.body);
     await etud.save();
@@ -44,30 +53,20 @@ app.post("/add", async (req, res) => {
   }
 });
 
-app.get("/Etudiants", async (req, res) => {
+app.put("Etudiants/update/:id", async (req, res) => {
   try {
-    let results = await Etud.find({});
-    res.send(results);
-  } catch (err) {
-    // Gérer l'erreur ici
-    console.error(err);
-  }
-});
-
-app.put("/update/:id", async (req, res) => {
-  try {
-    const etud = await etud.findByIdAndUpdate(req.params.id, req.body);
+    const etud = await Etud.findByIdAndUpdate(req.params.id, req.body);
     await etud.save();
-    res.status(200).send({ message: `${etud.nom} is succussffully updated` });
+    res.status(200).send({ message: `${etud.nom} is successfully updated` });
   } catch (err) {
     res.status(400).send({ error: `error updating etudiant ${err}` });
   }
 });
 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/Etudiants/delete/:id", async (req, res) => {
   try {
     const etud = await Etud.findByIdAndDelete(req.params.id);
-    res.status(200).send({ message: `${etud.nom} is succussffully deleted` });
+    res.status(200).send({ message: `${etud.nom} is successfully deleted` });
   } catch (err) {
     res.status(400).send({ error: `error deleting etudiant ${err}` });
   }

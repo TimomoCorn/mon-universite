@@ -11,8 +11,8 @@ export class ListEtuds extends Component {
       Etuds: [],
       NumEtudiant: "",
       Nom: "",
-      Prénom: "",
       DatenET: "",
+      Prenom: "",
     };
   }
 
@@ -34,12 +34,21 @@ export class ListEtuds extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    alert(
+      this.state.NumEtudiant +
+        " " +
+        this.state.Nom +
+        " " +
+        this.state.DatenET +
+        " " +
+        this.state.Prenom
+    );
     add(
       {
         NumEtudiant: this.state.NumEtudiant,
         Nom: this.state.Nom,
-        Prénom: this.state.Prénom,
         DatenET: this.state.DatenET,
+        Prenom: this.state.Prenom,
       },
       (res) => {
         if (res.status === 200) {
@@ -55,7 +64,7 @@ export class ListEtuds extends Component {
       {
         NumEtudiant: this.state.NumEtudiant,
         Nom: this.state.Nom,
-        Prénom: this.state.Prénom,
+        Prenom: this.state.Prenom,
         DatenET: this.state.DatenET,
       },
       (res) => {
@@ -88,10 +97,10 @@ export class ListEtuds extends Component {
                 Nom
               </th>
               <th className="border-b-2 border-gray-300 py-2 text-center border">
-                Prénom
+                Date de naissance
               </th>
               <th className="border-b-2 border-gray-300 py-2 text-center border">
-                Date de naissance
+                Prénom
               </th>
               <th className="border-b-2 border-gray-300 py-2 text-center border">
                 Actions
@@ -108,10 +117,10 @@ export class ListEtuds extends Component {
                   {etud.Nom}
                 </td>
                 <td className="border-b-2 border-gray-300 py-2 text-center border">
-                  {etud.Prénom}
+                  {etud.DatenET}
                 </td>
                 <td className="border-b-2 border-gray-300 py-2 text-center border">
-                  {etud.DatenET}
+                  {etud.Prenom}
                 </td>
                 <td className="border-b-2 border-gray-300 py-2 text-center border">
                   <button
@@ -155,19 +164,19 @@ export class ListEtuds extends Component {
           />
           <input
             type="text"
-            name="Prénom"
-            value={this.state.Prénom}
-            onChange={this.handleChange}
-            className="border border-gray-400 rounded py-2 px-4 mr-2"
-            placeholder="Prénom"
-          />
-          <input
-            type="text"
             name="DatenET"
             value={this.state.DatenET}
             onChange={this.handleChange}
             className="border border-gray-400 rounded py-2 px-4 mr-2"
             placeholder="Date de naissance"
+          />
+          <input
+            type="text"
+            name="Prenom"
+            value={this.state.Prenom}
+            onChange={this.handleChange}
+            className="border border-gray-400 rounded py-2 px-4 mr-2"
+            placeholder="Prénom"
           />
           <button
             type="submit"
