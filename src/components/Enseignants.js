@@ -74,6 +74,7 @@ export class ListEnseignants extends Component {
       if (res.status === 200) {
         this.getEnseignants();
       }
+      alert(res);
     });
   };
 

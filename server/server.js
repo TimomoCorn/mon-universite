@@ -87,16 +87,6 @@ const EnsSchema = new Schema(
 
 let Ens = mongoose.model("Enseignants", EnsSchema, "Enseignants");
 
-app.post("/add", async (req, res) => {
-  try {
-    const ens = new Ens(req.body);
-    await ens.save();
-    res.status(200).send({ message: `${ens.NomEns} is successfully added` });
-  } catch (err) {
-    res.status(400).send({ error: `error adding enseignant ${err}` });
-  }
-});
-
 app.get("/Enseignants", async (req, res) => {
   try {
     let results = await Ens.find({});
@@ -106,7 +96,17 @@ app.get("/Enseignants", async (req, res) => {
   }
 });
 
-app.put("/update/:id", async (req, res) => {
+app.post("/Enseignants/add", async (req, res) => {
+  try {
+    const ens = new Ens(req.body);
+    await ens.save();
+    res.status(200).send({ message: `${ens.NomEns} is successfully added` });
+  } catch (err) {
+    res.status(400).send({ error: `error adding enseignant ${err}` });
+  }
+});
+
+app.put("/Enseignants/update/:id", async (req, res) => {
   try {
     const ens = await Ens.findByIdAndUpdate(req.params.id, req.body);
     await ens.save();
@@ -116,7 +116,7 @@ app.put("/update/:id", async (req, res) => {
   }
 });
 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/Enseignants/delete/:id", async (req, res) => {
   try {
     const ens = await Ens.findByIdAndDelete(req.params.id);
     res.status(200).send({ message: `${ens.NomEns} is successfully deleted` });
