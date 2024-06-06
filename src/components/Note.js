@@ -76,35 +76,53 @@ export class ListNotes extends Component {
 
   render() {
     return (
-      <div className="container mx-auto">
+      <div className="container mx-auto pt-3">
         <h1 className="text-2xl font-bold mb-4">Liste des Notes</h1>
         <table className="w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2">Date Note</th>
-              <th className="px-4 py-2">Note</th>
-              <th className="px-4 py-2">Numéro Etudiant</th>
-              <th className="px-4 py-2">Code Matière</th>
-              <th className="px-4 py-2">Actions</th>
+              <th className="border-b-2 border-gray-300 py-2 text-center border">
+                Date Note
+              </th>
+              <th className="border-b-2 border-gray-300 py-2 text-center border">
+                Note
+              </th>
+              <th className="border-b-2 border-gray-300 py-2 text-center border">
+                Numéro Etudiant
+              </th>
+              <th className="border-b-2 border-gray-300 py-2 text-center border">
+                Code Matière
+              </th>
+              <th className="border-b-2 border-gray-300 py-2 text-center border">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {this.state.Notes.map((note) => (
               <tr key={note._id}>
-                <td className="border px-4 py-2">{note.Date}</td>
-                <td className="border px-4 py-2">{note.Note}</td>
-                <td className="border px-4 py-2">{note.NumEtudiant}</td>
-                <td className="border px-4 py-2">{note.CodeMat}</td>
-                <td>
+                <td className="border-b-2 border-gray-300 py-2 text-center border">
+                  {note.Date}
+                </td>
+                <td className="border-b-2 border-gray-300 py-2 text-center border">
+                  {note.Note}
+                </td>
+                <td className="border-b-2 border-gray-300 py-2 text-center border">
+                  {note.NumEtudiant}
+                </td>
+                <td className="border-b-2 border-gray-300 py-2 text-center border">
+                  {note.CodeMat}
+                </td>
+                <td className="border-b-2 border-gray-300 py-2 text-center border">
                   <button
                     onClick={() => this.handleUpdate(note._id)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2"
                   >
                     Modifier
                   </button>
                   <button
                     onClick={() => this.handleDelete(note._id)}
-                    className="px-4 py-2 bg-red-500 text-white rounded"
+                    className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
                   >
                     Supprimer
                   </button>
@@ -120,7 +138,7 @@ export class ListNotes extends Component {
             value={this.state.DateNote}
             onChange={this.handleChange}
             placeholder="Date Note"
-            className="px-4 py-2 border rounded"
+            className="border border-gray-400 rounded py-2 px-4 mr-2"
           />
           <input
             type="text"
@@ -128,7 +146,7 @@ export class ListNotes extends Component {
             value={this.state.Note}
             onChange={this.handleChange}
             placeholder="Note"
-            className="px-4 py-2 border rounded"
+            className="border border-gray-400 rounded py-2 px-4 mr-2"
           />
           <input
             type="text"
@@ -136,7 +154,7 @@ export class ListNotes extends Component {
             value={this.state.NumEtudiant}
             onChange={this.handleChange}
             placeholder="Numéro Etudiant"
-            className="px-4 py-2 border rounded"
+            className="border border-gray-400 rounded py-2 px-4 mr-2"
           />
           <input
             type="text"
@@ -144,7 +162,7 @@ export class ListNotes extends Component {
             value={this.state.CodeMat}
             onChange={this.handleChange}
             placeholder="Code Matière"
-            className="px-4 py-2 border rounded"
+            className="border border-gray-400 rounded py-2 px-4 mr-2"
           />
           <button
             type="submit"
