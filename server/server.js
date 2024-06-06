@@ -131,15 +131,15 @@ app.delete("/delete/:id", async (req, res) => {
 const MatSchema = new Schema(
   {
     CodeMat: String,
-    LibelléMat: String,
+    LibelleMat: String,
     CoefMat: Number,
   },
   { versionKey: false }
 );
 
-let Mat = mongoose.model("Matieres", MatSchema, "Matieres");
+let Mat = mongoose.model("Matiere", MatSchema, "Matiere");
 
-app.get("/Matieres", async (req, res) => {
+app.get("/Matiere", async (req, res) => {
   try {
     let results = await Mat.find({});
     res.send(results);
@@ -148,35 +148,35 @@ app.get("/Matieres", async (req, res) => {
   }
 });
 
-app.post("/add", async (req, res) => {
+app.post("/Matiere/add", async (req, res) => {
   try {
     const mat = new Mat(req.body);
     await mat.save();
     res
       .status(200)
-      .send({ message: `${mat.LibelléMat} is successfully added` });
+      .send({ message: `${mat.LibelleMat} is successfully added` });
   } catch (err) {
     res.status(400).send({ error: `error adding matiere ${err}` });
   }
 });
-app.put("/update/:id", async (req, res) => {
+app.put("/Matiere/update/:id", async (req, res) => {
   try {
     const mat = await Mat.findByIdAndUpdate(req.params.id, req.body);
     await mat.save();
     res
       .status(200)
-      .send({ message: `${mat.LibelléMat} is successfully updated` });
+      .send({ message: `${mat.LibelleMat} is successfully updated` });
   } catch (err) {
     res.status(400).send({ error: `error updating matiere ${err}` });
   }
 });
 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/Matiere/delete/:id", async (req, res) => {
   try {
     const mat = await Mat.findByIdAndDelete(req.params.id);
     res
       .status(200)
-      .send({ message: `${mat.LibelléMat} is successfully deleted` });
+      .send({ message: `${mat.LibelleMat} is successfully deleted` });
   } catch (err) {
     res.status(400).send({ error: `error deleting matiere ${err}` });
   }

@@ -6,7 +6,7 @@ import Menu from "../navigation/menu";
 import Accueil from "./Accueil";
 import ListEtuds from "./Etudiants";
 import ListEnseignants from "./Enseignants";
-import ListMatiere from "./Matieres";
+import ListMatiere from "./Matiere";
 import ListNote from "./Note";
 
 function App() {
