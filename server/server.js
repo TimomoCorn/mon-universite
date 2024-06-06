@@ -34,6 +34,16 @@ let EtudSchema = new Schema(
 
 let Etud = mongoose.model("Etudiants", EtudSchema, "Etudiants");
 
+app.post("/add", async (req, res) => {
+  try {
+    const etud = new Etud(req.body);
+    await etud.save();
+    res.status(200).send({ message: `${etud.nom} is successfully added` });
+  } catch (err) {
+    res.status(400).send({ error: `error adding etudiant ${err}` });
+  }
+});
+
 app.get("/Etudiants", async (req, res) => {
   try {
     let results = await Etud.find({});
@@ -77,6 +87,16 @@ const EnsSchema = new Schema(
 );
 
 let Ens = mongoose.model("Enseignants", EnsSchema, "Enseignants");
+
+app.post("/add", async (req, res) => {
+  try {
+    const ens = new Ens(req.body);
+    await ens.save();
+    res.status(200).send({ message: `${ens.NomEns} is successfully added` });
+  } catch (err) {
+    res.status(400).send({ error: `error adding enseignant ${err}` });
+  }
+});
 
 app.get("/Enseignants", async (req, res) => {
   try {
@@ -128,11 +148,24 @@ app.get("/Matieres", async (req, res) => {
   }
 });
 
+app.post("/add", async (req, res) => {
+  try {
+    const mat = new Mat(req.body);
+    await mat.save();
+    res
+      .status(200)
+      .send({ message: `${mat.LibelléMat} is successfully added` });
+  } catch (err) {
+    res.status(400).send({ error: `error adding matiere ${err}` });
+  }
+});
 app.put("/update/:id", async (req, res) => {
   try {
     const mat = await Mat.findByIdAndUpdate(req.params.id, req.body);
     await mat.save();
-    res.status(200).send({ message: `${mat.LibelléMat} is successfully updated` });
+    res
+      .status(200)
+      .send({ message: `${mat.LibelléMat} is successfully updated` });
   } catch (err) {
     res.status(400).send({ error: `error updating matiere ${err}` });
   }
@@ -141,7 +174,9 @@ app.put("/update/:id", async (req, res) => {
 app.delete("/delete/:id", async (req, res) => {
   try {
     const mat = await Mat.findByIdAndDelete(req.params.id);
-    res.status(200).send({ message: `${mat.LibelléMat} is successfully deleted` });
+    res
+      .status(200)
+      .send({ message: `${mat.LibelléMat} is successfully deleted` });
   } catch (err) {
     res.status(400).send({ error: `error deleting matiere ${err}` });
   }
@@ -149,10 +184,8 @@ app.delete("/delete/:id", async (req, res) => {
 
 // Définition de schéma et de modèle Note
 
-
 const NoteSchema = new Schema(
   {
-    _id: String,
     NumEtudiant: String,
     CodeMat: String,
     Note: Number,
@@ -172,11 +205,25 @@ app.get("/Notes", async (req, res) => {
   }
 });
 
+app.post("/add", async (req, res) => {
+  try {
+    const note = new Note(req.body);
+    await note.save();
+    res
+      .status(200)
+      .send({ message: `Note with id ${note._id} is successfully added` });
+  } catch (err) {
+    res.status(400).send({ error: `Error adding note: ${err}` });
+  }
+});
+
 app.put("/update/:id", async (req, res) => {
   try {
     const note = await Note.findByIdAndUpdate(req.params.id, req.body);
     await note.save();
-    res.status(200).send({ message: `Note with id ${note._id} is successfully updated` });
+    res
+      .status(200)
+      .send({ message: `Note with id ${note._id} is successfully updated` });
   } catch (err) {
     res.status(400).send({ error: `Error updating note: ${err}` });
   }
@@ -185,7 +232,9 @@ app.put("/update/:id", async (req, res) => {
 app.delete("/delete/:id", async (req, res) => {
   try {
     const note = await Note.findByIdAndDelete(req.params.id);
-    res.status(200).send({ message: `Note with id ${note._id} is successfully deleted` });
+    res
+      .status(200)
+      .send({ message: `Note with id ${note._id} is successfully deleted` });
   } catch (err) {
     res.status(400).send({ error: `Error deleting note: ${err}` });
   }

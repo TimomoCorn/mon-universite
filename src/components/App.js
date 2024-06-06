@@ -1,13 +1,13 @@
-import '../styles/App.css';
+import "../styles/App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Menu from '../navigation/menu';
+import Menu from "../navigation/menu";
 
-import Accueil from './Accueil';
-import ListEtuds from './Etudiants';
-import ListEnseignants from './Enseignants';
-import ListMatiere from './Matiere';
-import ListNote from './Note';
+import Accueil from "./Accueil";
+import ListEtuds from "./Etudiants";
+import ListEnseignants from "./Enseignants";
+import ListMatiere from "./Matieres";
+import ListNote from "./Notes";
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<Accueil />} />
         <Route path="/etudiants" element={<ListEtuds />} />
         <Route path="/enseignants" element={<ListEnseignants />} />
-        <Route path="/matiere" element={<ListMatiere />} />
-        <Route path="/note" element={<ListNote />} />
+        <Route path="/matieres" element={<ListMatiere />} />
+        <Route path="/notes" element={<ListNote />} />
       </Routes>
     </Router>
   );
