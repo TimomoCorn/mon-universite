@@ -7,7 +7,7 @@ import Accueil from "./Accueil";
 import ListEtuds from "./Etudiants";
 import ListEnseignants from "./Enseignants";
 import ListMatiere from "./Matieres";
-import ListNote from "./Notes";
+import ListNote from "./Note";
 
 function App() {
   return (
